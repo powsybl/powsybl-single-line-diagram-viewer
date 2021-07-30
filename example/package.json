@@ -1,0 +1,24 @@
+{
+  "name": "sld-svg-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "npx esbuild src/index.js --bundle --outfile=dist/index.js --loader:.svg=dataurl --loader:.html=text",
+    "start": "firefox index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esbuild": "^0.12.15",
+    "sld-svg": "file:../sld-svg"
+  },
+  "devDependencies": {
+    "eslint": "^7.30.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0"
+  }
+}

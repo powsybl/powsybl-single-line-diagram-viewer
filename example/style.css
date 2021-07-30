@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #424242;
+}
+
+#maximize-container {
+    width: 1200px;
+    height: 900px;
+    background-color: #252422;
+}
+
+#svg-container {
+    position: relative; /* let it at the charge of the user? */
+    width: 700px;
+    height: 700px;
+    background-color: black;
+}
+
+#sld-container {
+    background-color: #8BE8CB;
+}
