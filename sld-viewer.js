@@ -15,7 +15,7 @@ const COMPONENT_TYPES = new Set([
   'LOAD_BREAK_SWITCH'
 ])
 
-export default class SldSvg {
+export default class SldViewer {
   constructor () {
     this.canvas = SVG()
     this.isMaximized = false
