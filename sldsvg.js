@@ -104,8 +104,14 @@ export default class SldSvg {
       return vlList.indexOf(element.nextVId) === -1
     })
 
+    const y = this.getArrowPositionY(navigables)
+
     navigables.forEach(element => {
-      const position = this.getArrowPosition(element)
+      const position = {
+        x: this.getArrowPositionX(element),
+        lowestY: y.lowestY,
+        highestY: y.highestY
+      }
 
       this.createNavigationArrow(
         element,
@@ -204,22 +210,29 @@ export default class SldSvg {
     element.setAttribute('style', `width: ${width}px; height: ${height}px`)
   }
 
-  getArrowPosition (element) {
-    const position = {}
-
+  getArrowPositionX (element) {
     const transform = SVG('#'.concat(element.id)).attr('transform').split(',')
 
-    position.x = parseInt(transform[0].match(/\d+/))
+    return parseInt(transform[0].match(/\d+/))
+  }
 
-    const y = parseInt(transform[1].match(/\d+/))
-    if (position.lowestY === undefined || y < position.lowestY) {
-      position.lowestY = y
-    }
-    if (position.highestY === undefined || y > position.highestY) {
-      position.highestY = y
-    }
+  getArrowPositionY (navigables) {
+    let lowestY
+    let highestY
 
-    return position
+    navigables.forEach(element => {
+      const transform = SVG('#'.concat(element.id)).attr('transform').split(',')
+      const y = parseInt(transform[1].match(/\d+/))
+
+      if (lowestY === undefined || y < lowestY) {
+        lowestY = y
+      }
+      if (highestY === undefined || y > highestY) {
+        highestY = y
+      }
+    })
+
+    return { lowestY, highestY }
   }
 
   createNavigationArrow (element, arrowStyle, callback, direction, position) {
@@ -249,12 +262,18 @@ export default class SldSvg {
 
     group.on('mouseenter', (event) => {
       const pathElement = group.find('path')
+      console.log('mouseenter')
+      console.log(pathElement)
       pathElement[0].attr('fill', backgroundHoverColor)
+      pathElement[1].attr('style', `fill: ${backgroundColor}`)
     })
 
     group.on('mouseleave', (event) => {
       const pathElement = group.find('path')
+      console.log('mouseleave')
+      console.log(pathElement)
       pathElement[0].attr('fill', backgroundColor)
+      pathElement[1].attr('style', `fill: ${backgroundHoverColor}`)
     })
   }
 
